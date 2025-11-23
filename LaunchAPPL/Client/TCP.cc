@@ -5,6 +5,7 @@
 #include "ServerProtocol.h"
 #include <termios.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
 #include <chrono>
 #include <iostream>
 #include <sys/types.h>

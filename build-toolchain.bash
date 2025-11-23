@@ -25,6 +25,11 @@ PREFIX=$DEFAULT_PREFIX
 BINUTILS=`pwd -P`/binutils-build
 BUILD_JOBS=$(nproc || sysctl -n hw.physicalcpu)
 
+
+#export CPPFLAGS="$CPPFLAGS -I/usr/local/include"
+#export LDFLAGS="$LDFLAGS -L/usr/local/lib"
+
+
 ##################### Prerequisites check
 
 if [ ! -d "$SRC/multiversal" ]; then
@@ -228,9 +233,10 @@ if [ $SKIP_THIRDPARTY != true ]; then
 		# Build binutils for 68K
 		mkdir -p binutils-build
 		cd binutils-build
-		$SRC/binutils/configure --target=m68k-apple-macos --prefix=$PREFIX --disable-doc
-		make -j$BUILD_JOBS
-		make install
+		$SRC/binutils/configure --target=m68k-apple-macos --prefix=$PREFIX --disable-doc CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib 
+ 
+		gmake -j$BUILD_JOBS
+		gmake install
 		cd ..
 
 		# Build gcc for 68K
@@ -239,10 +245,10 @@ if [ $SKIP_THIRDPARTY != true ]; then
 		export target_configargs="--disable-nls --enable-libstdcxx-dual-abi=no --disable-libstdcxx-verbose"
 		$SRC/gcc/configure --target=m68k-apple-macos --prefix=$PREFIX \
 				--enable-languages=c,c++ --with-arch=m68k --with-cpu=m68000 \
-				--disable-libssp MAKEINFO=missing
+				--disable-libssp MAKEINFO=missing --with-mpc=/usr/local  --with-mpfr=/usr/local  --with-gmp=/usr/local --with-isl=/usr/local --with-libiconv-prefix=/usr/local
 		# There seems to be a build failure in parallel builds; ignore any errors and try again without -j8.
-		make -j$BUILD_JOBS || make
-		make install
+		gmake -j$BUILD_JOBS || gmake
+		gmake install
 		unset target_configargs
 		cd ..
 
@@ -271,9 +277,10 @@ if [ $SKIP_THIRDPARTY != true ]; then
 		# Build binutils for PPC
 		mkdir -p binutils-build-ppc
 		cd binutils-build-ppc
-		$SRC/binutils/configure --disable-plugins --target=powerpc-apple-macos --prefix=$PREFIX --disable-doc
-		make -j$BUILD_JOBS
-		make install
+		$SRC/binutils/configure --disable-plugins --target=powerpc-apple-macos --prefix=$PREFIX --disable-doc  CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib
+
+		gmake -j$BUILD_JOBS
+		gmake install
 		cd ..
 
 		# Build gcc for PPC
@@ -281,9 +288,9 @@ if [ $SKIP_THIRDPARTY != true ]; then
 		cd gcc-build-ppc
 		export target_configargs="--disable-nls --enable-libstdcxx-dual-abi=no --disable-libstdcxx-verbose"
 		$SRC/gcc/configure --target=powerpc-apple-macos --prefix=$PREFIX \
-			--enable-languages=c,c++ --disable-libssp --disable-lto MAKEINFO=missing
-		make -j$BUILD_JOBS
-		make install
+			--enable-languages=c,c++ --disable-libssp --disable-lto MAKEINFO=missing --with-mpc=/usr/local  --with-mpfr=/usr/local  --with-gmp=/usr/local --with-isl=/usr/local --with-libiconv-prefix=/usr/local
+		gmake -j$BUILD_JOBS
+		gmake install
 		unset target_configargs
 		cd ..
 
@@ -306,8 +313,8 @@ if [ $SKIP_THIRDPARTY != true ]; then
 	mkdir -p hfsutils
 	cd hfsutils
 	$SRC/hfsutils/configure --prefix=$PREFIX --mandir=$PREFIX/share/man --enable-devlibs
-	make
-	make install
+	gmake
+	gmake install
 	cd ..
 
 	if [ $CLEAN_AFTER_BUILD != false ]; then

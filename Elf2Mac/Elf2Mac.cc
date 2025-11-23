@@ -20,7 +20,7 @@
 #include "Elf2Mac.h"
 #include "SegmentMap.h"
 
-#include <gelf.h>
+#include "gelf.h"
 
 #include <err.h>
 

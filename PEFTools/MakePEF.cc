@@ -6,7 +6,7 @@
 #include <set>
 #include <algorithm>
 #include <string.h>
-#include <alloca.h>
+//#include <alloca.h>
 
 #include <assert.h>
 #include <stdint.h>

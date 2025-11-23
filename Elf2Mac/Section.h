@@ -20,7 +20,7 @@
 #ifndef SECTION_H
 #define SECTION_H
 
-#include <gelf.h>
+#include "gelf.h"
 
 #include <stdint.h>
 #include <string>

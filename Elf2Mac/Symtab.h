@@ -20,7 +20,7 @@
 #ifndef SYMTAB_H
 #define SYMTAB_H
 
-#include <gelf.h>
+#include "gelf.h"
 
 #include <vector>
 #include <map>

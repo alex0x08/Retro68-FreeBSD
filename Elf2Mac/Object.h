@@ -20,7 +20,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <gelf.h>
+#include "gelf.h"
 
 #include <unordered_map>
 #include <vector>

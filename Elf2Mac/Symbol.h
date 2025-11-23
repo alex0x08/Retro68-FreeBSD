@@ -20,7 +20,7 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
-#include <gelf.h>
+#include "gelf.h"
 
 #include <memory>
 #include <string>
