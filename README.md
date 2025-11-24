@@ -1,3 +1,27 @@
+Retro68 - FreeBSD build
+==================================
+This fork supports build on FreeBSD host:
+
+![Working demo](https://github.com/alex0x08/Retro68-FreeBSD/blob/master/images/retro68-freebsd-build1.jpeg?raw=true)
+
+Both m68k and PowerPC cross-compilers, demo apps and tests - all build&work successfully under FreeBSD 14. 
+
+Required packages:
+
+    'pkg install cmake gmp mpfr mpc boost-all bison flex texinfo ruby
+
+
+What was changed:
+
+1. Pass CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib to configure script for binutils
+2. Pass --with-mpc=/usr/local  --with-mpfr=/usr/local  --with-gmp=/usr/local --with-isl=/usr/local --with-libiconv-prefix=/usr/local to configure script for GCC
+3. Changed all 'make' calls to 'gmake', due to different naming in FreeBSD
+4. Modified libelf headers to avoid mix with system header
+5. Modified  LaunchAPPL/Client/TCP.cc - added additional header, required on FreeBSD
+6. Removed #include alloca.h from PEFTools/MakePEF.cc ,because it was merged into stdlib
+
+   
+
 Retro68
 =======
 
